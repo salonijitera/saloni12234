@@ -1,6 +1,6 @@
 
 # PostgreSQL. Versions 9.3 and up are supported.
-# Ensure there is enough disk space for database operations
+# Ensure there is enough disk space for database operations and monitor disk usage
 #
 # Install the pg driver and ensure sufficient disk space:
 #   gem install pg
