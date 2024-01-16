@@ -1,5 +1,7 @@
 class UserService < BaseService
+  require 'securerandom'
   require 'jwt'
+  require 'bcrypt'
 
   class << self
     def authenticate_user(email:, password:)
@@ -18,6 +20,29 @@ class UserService < BaseService
       end
     rescue StandardError => e
       return { error: e.message }
+    end
+
+    def generate_reset_password_token(email)
+      user = User.find_by(email: email)
+
+      if user
+        token = SecureRandom.urlsafe_base64
+        expires_at = 2.hours.from_now
+
+        email_verification_token = user.email_verification_tokens.create(
+          token: token,
+          expires_at: expires_at,
+          is_used: false
+        )
+
+        if email_verification_token.persisted?
+          # Here you would send the email with the token
+          # For example: UserMailer.send_reset_password_instructions(user, token).deliver_now
+          return 'If your email is registered, a password reset link has been sent.'
+        end
+      end
+
+      'If your email is registered, a password reset link has been sent.'
     end
 
     private
