@@ -1,6 +1,7 @@
+
 # PostgreSQL. Versions 9.3 and up are supported.
 #
-# Install the pg driver:
+# Install the pg driver and check disk space:
 #   gem install pg
 # On macOS with Homebrew:
 #   gem install pg -- --with-pg-config=/usr/local/bin/pg_config
@@ -24,6 +25,7 @@ default: &default
   username: postgres
   port: 5432
 
+  # Ensure there is enough disk space for database operations
 development:
   <<: *default
   database: <%= ENV.fetch("DATABASE_NAME") { "base_source_development" } %>
