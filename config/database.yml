@@ -1,6 +1,8 @@
 # PostgreSQL. Versions 9.3 and up are supported.
+# Ensure there is enough disk space for database operations and monitor disk usage
 #
-# Install the pg driver:
+# It is critical to ensure that your database server has enough disk space to operate.
+# Install the pg driver and ensure sufficient disk space:
 #   gem install pg
 # On macOS with Homebrew:
 #   gem install pg -- --with-pg-config=/usr/local/bin/pg_config
@@ -19,6 +21,7 @@ default: &default
   encoding: unicode
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
+  # Ensure the PostgreSQL data directory has sufficient disk space before operations
   host: <%= ENV.fetch("BASE_SOURCE_DATABASE_HOST") { "localhost" } %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: postgres
