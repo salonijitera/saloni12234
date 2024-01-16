@@ -1,6 +1,9 @@
+
 # PostgreSQL. Versions 9.3 and up are supported.
-#
-# Install the pg driver:
+# Ensure there is enough disk space for database operations and monitor disk usage. Check and free up space if necessary using `df -h` and clean up or expand disk space as needed.
+# Install the pg driver and ensure sufficient disk space:
+# Check disk space with `df -h` and clean up or expand disk space as needed.
+# Install the pg driver and ensure sufficient disk space:
 #   gem install pg
 # On macOS with Homebrew:
 #   gem install pg -- --with-pg-config=/usr/local/bin/pg_config
@@ -23,6 +26,7 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: postgres
   port: 5432
+  # Ensure the PostgreSQL data directory has enough disk space for operations.
 
 development:
   <<: *default
@@ -31,8 +35,6 @@ development:
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
-  # When left blank, postgres will use the default role. This is
-  # the same name as the operating system user that initialized the database.
 
   # The password associated with the postgres role (username).
   #password:
@@ -40,7 +42,6 @@ development:
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have
   # domain sockets, so uncomment these lines.
-  #host: localhost
 
   # The TCP port the server listens on. Defaults to 5432.
   # If your server runs on a different port number, change accordingly.
