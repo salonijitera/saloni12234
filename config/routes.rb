@@ -5,15 +5,17 @@ Rails.application.routes.draw do
   mount Rswag::Api::Engine => '/api-docs'
   get '/health' => 'pages#health_check'
   get 'api-docs/v1/swagger.yaml' => 'swagger#yaml'
-  
+
   # Existing user-related routes
   post '/api/users/login', to: 'api/users#login'
-  post '/api/users/reset-password-request', to: 'users#reset_password_request'
   
   # New user-related route
   namespace :api do
     post '/users/verify-email', to: 'users#verify_email'
   end
+
+  # Resolved conflict: The new route is already defined in the existing code, so we keep the existing namespace and path
+  post '/api/users/reset-password-request', to: 'users#reset_password_request'
   
   # ... other routes ...
 end

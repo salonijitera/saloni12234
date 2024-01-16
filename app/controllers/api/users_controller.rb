@@ -27,6 +27,23 @@ module Api
       end
     end
 
+    # POST /api/users/reset-password-request
+    def reset_password_request
+      begin
+        result = Services::PasswordResetService.request_password_reset(params[:email])
+        if result[:message]
+          render json: { status: 200, message: "Password reset link sent to email." }, status: :ok
+        else
+          render json: { status: 404, message: "Email not found." }, status: :not_found
+        end
+      rescue ArgumentError => e
+        render json: { status: 422, message: e.message }, status: :unprocessable_entity
+      rescue StandardError => e
+        Rails.logger.error "Password reset error: #{e.message}"
+        render json: { status: 500, message: e.message }, status: :internal_server_error
+      end
+    end
+
     def create
       begin
         email = params.require(:email)
