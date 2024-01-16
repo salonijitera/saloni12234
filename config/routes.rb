@@ -9,7 +9,10 @@ Rails.application.routes.draw do
   # Existing user-related routes
   post '/api/users/login', to: 'api/users#login'
   
-  # New user-related route
+  # New user-related route from new code
+  post '/api/users/register' => 'users#register'
+
+  # New user-related route from existing code
   namespace :api do
     post '/users/verify-email', to: 'users#verify_email'
   end

@@ -27,6 +27,30 @@ module Api
       end
     end
 
+    # POST /api/users/register
+    def register
+      result = UserService.register_user(
+        email: user_params[:email],
+        password: user_params[:password],
+        password_confirmation: user_params[:password]
+      )
+
+      if result[:user_id]
+        render json: { status: 201, message: result[:message] }, status: :created
+      else
+        case result[:error]
+        when 'Invalid email format'
+          render json: { error: result[:error] }, status: :unprocessable_entity
+        when 'Email already registered'
+          render json: { error: result[:error] }, status: :conflict
+        when 'Password must be at least 8 characters long.'
+          render json: { error: result[:error] }, status: :bad_request
+        else
+          render json: { error: 'An unexpected error occurred' }, status: :internal_server_error
+        end
+      end
+    end
+
     # POST /api/users/reset-password-request
     def reset_password_request
       begin
@@ -83,7 +107,7 @@ module Api
     private
 
     def user_params
-      params.permit(:token)
+      params.permit(:email, :password, :token)
     end
 
     def verify_recaptcha(recaptcha_token)
