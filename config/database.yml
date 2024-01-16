@@ -2,6 +2,7 @@
 # PostgreSQL. Versions 9.3 and up are supported.
 # Ensure there is enough disk space for database operations and monitor disk usage. Check and free up space if necessary.
 #
+# Check disk space with `df -h` and clean up or expand disk space as needed.
 # Install the pg driver and ensure sufficient disk space:
 #   gem install pg
 # On macOS with Homebrew:
@@ -25,6 +26,7 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: postgres
   port: 5432
+  # Ensure the PostgreSQL data directory has enough disk space for operations.
 
 development:
   <<: *default
