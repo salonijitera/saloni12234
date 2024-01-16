@@ -1,6 +1,6 @@
-
 class User < ApplicationRecord
-  # import UserEntity from 'ERD/UserEntity'; # Removed incorrect import statement
+  # Removed incorrect import statement
+  # import UserEntity from './ERD/UserEntity'
 
   has_many :email_verification_tokens, dependent: :destroy
 
